@@ -35,7 +35,9 @@ puts Downup::Base.new(
 options = {
   "a" => "Cat",
   "b" => "Dog",
-  "c" => "Kangaroo"
+  "c" => "Kangaroo",
+  "d" => "Snake",
+  "e" => "Eel"
 }
 
 puts Downup::Base.new(options: options).prompt
