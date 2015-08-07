@@ -84,7 +84,12 @@ module Downup
         end
       when Hash
         options.each_with_index do |option_array, index|
-          stdout.puts colorize_option(option_array.join(": "), index)
+          if index == selected_position
+            stdout.puts "(#{option_array.first}) #{option_array.last}"
+          else
+            stdout.print "(#{eval("option_array.first.#{default_color}")}) "
+            stdout.print "#{eval("option_array.last.#{default_color}")}\n"
+          end
         end
       end
     end
