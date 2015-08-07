@@ -14,9 +14,9 @@ module Downup
 
       @options        = options
       @title          = title
-      @header_proc    = header_proc
       @default_color  = default_color
       @selected_color = selected_color
+      @header_proc    = header_proc
     end
 
     def prompt(position = 0)
@@ -75,7 +75,6 @@ module Downup
 
     def print_title
       return if title.nil?
-
       puts "#{title}".red
     end
 

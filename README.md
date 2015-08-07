@@ -21,6 +21,8 @@ Or install it yourself as:
 
 ## Usage
 
+[Runnable Examples](examples/basic.rb)
+
 ```ruby
 options = [
   "Dog",
