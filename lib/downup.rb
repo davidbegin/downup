@@ -17,6 +17,8 @@ module Downup
       @default_color  = default_color
       @selected_color = selected_color
       @header_proc    = header_proc
+      @stdin          = STDIN
+      @stdout         = $stdout
     end
 
     def prompt(position = 0)
@@ -25,7 +27,7 @@ module Downup
       header_proc.call
       print_title
       print_options
-      print "\n> "
+      stdout.print "\n> "
       process_input read_char
     end
 
@@ -36,7 +38,9 @@ module Downup
                 :selected_position,
                 :header_proc,
                 :selected_color,
-                :default_color
+                :default_color,
+                :stdin,
+                :stdout
 
     def process_input(input)
       case input
@@ -44,12 +48,25 @@ module Downup
         prompt(selected_position - 1)
       when "\e[B", "j"
         prompt(selected_position + 1)
-      when "\u0003" then exit
+      when *option_keys
+        prompt(option_keys.index(input))
       when "\r"
+        execute_selection(input)
+      when "\u0003" then exit
+      else prompt(selected_position); end
+    end
+
+    def execute_selection(input)
+      case options
+      when Array
         options[selected_position]
-      else
-        prompt(selected_position)
+      when Hash
+        options.fetch(option_keys[selected_position])
       end
+    end
+
+    def option_keys
+      options.is_a?(Array) ? [] : options.keys
     end
 
     def position_selector(position)
@@ -60,8 +77,15 @@ module Downup
     end
 
     def print_options
-      options.each_with_index do |option, index|
-        puts colorize_option(option, index)
+      case options
+      when Array
+        options.each_with_index do |option, index|
+          stdout.puts colorize_option(option, index)
+        end
+      when Hash
+        options.each_with_index do |option_array, index|
+          stdout.puts colorize_option(option_array.join(": "), index)
+        end
       end
     end
 
@@ -75,20 +99,20 @@ module Downup
 
     def print_title
       return if title.nil?
-      puts "#{title}".red
+      stdout.puts "#{title}".red
     end
 
     def read_char
-      STDIN.echo = false
-      STDIN.raw!
-      input = STDIN.getc.chr
+      stdin.echo = false
+      stdin.raw!
+      input = stdin.getc.chr
       if input == "\e" then
-        input << STDIN.read_nonblock(3) rescue nil
-        input << STDIN.read_nonblock(2) rescue nil
+        input << stdin.read_nonblock(3) rescue nil
+        input << stdin.read_nonblock(2) rescue nil
       end
     ensure
-      STDIN.echo = true
-      STDIN.cooked!
+      stdin.echo = true
+      stdin.cooked!
       return input
     end
   end

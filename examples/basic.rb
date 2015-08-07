@@ -31,3 +31,11 @@ puts Downup::Base.new(
   default_color: :cyan,
   selected_color: :bg_magenta
 ).prompt
+
+options = {
+  "a" => "Cat",
+  "b" => "Dog",
+  "c" => "Kangaroo"
+}
+
+puts Downup::Base.new(options: options).prompt
