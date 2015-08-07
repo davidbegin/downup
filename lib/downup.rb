@@ -6,10 +6,17 @@ module Downup
   using Colors
 
   class Base
-    def initialize(options:, title: nil, header_proc: Proc.new)
-      @options = options
-      @title   = title
-      @header_proc  = header_proc
+    def initialize(options:,
+                   title: nil,
+                   default_color: :gray,
+                   selected_color: :green,
+                   header_proc: Proc.new {})
+
+      @options        = options
+      @title          = title
+      @header_proc    = header_proc
+      @default_color  = default_color
+      @selected_color = selected_color
     end
 
     def prompt(position = 0)
@@ -24,7 +31,12 @@ module Downup
 
     private
 
-    attr_reader :options, :title, :selected_position, :header_proc
+    attr_reader :options,
+                :title,
+                :selected_position,
+                :header_proc,
+                :selected_color,
+                :default_color
 
     def process_input(input)
       case input
@@ -49,7 +61,15 @@ module Downup
 
     def print_options
       options.each_with_index do |option, index|
-        puts index == selected_position ? option.bg_magenta : option
+        puts colorize_option(option, index)
+      end
+    end
+
+    def colorize_option(option, index)
+      if index == selected_position
+        eval("option.#{selected_color}")
+      else
+        eval("option.#{default_color}")
       end
     end
 
