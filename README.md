@@ -75,6 +75,18 @@ Downup::Base.new(
   default_color: :bg_gray,
   selected_color: :cyan
 ).prompt
+
+# You can also pass in a hash, and then quickly jump around,
+# but the key
+options = {
+  "a" => "Cat",
+  "b" => "Dog",
+  "c" => "Kangaroo",
+  "d" => "Snake",
+  "e" => "Eel"
+}
+
+puts Downup::Base.new(options: options).prompt
 ```
 
 ## Inspired By

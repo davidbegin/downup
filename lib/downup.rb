@@ -8,8 +8,8 @@ module Downup
   class Base
     def initialize(options:,
                    title: nil,
-                   default_color: :gray,
-                   selected_color: :green,
+                   default_color: :brown,
+                   selected_color: :magenta,
                    header_proc: Proc.new {})
 
       @options        = options
