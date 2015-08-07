@@ -8,14 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Downup::VERSION
   spec.authors       = ["David Begin"]
   spec.email         = ["davidmichaelbe@gmail.com"]
-
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
-  end
-
-  spec.summary       = %q{Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{Write a longer description or delete this line.}
-  spec.homepage      = "https://rubygems.org"
+  spec.summary       = "a Gem for creating menus that you can easily navigate through"
+  spec.description   = "allow up and down arrows, as well as vim like commands"
+  spec.homepage      = "https://github.com/presidentJFK/downup"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
