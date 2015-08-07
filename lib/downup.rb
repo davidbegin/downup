@@ -23,9 +23,9 @@ module Downup
 
     def process_input(input)
       case input
-      when "\e[A"
+      when "\e[A", "k"
         prompt(selected_position - 1)
-      when "\e[B"
+      when "\e[B", "j"
         prompt(selected_position + 1)
       when "\u0003" then exit
       when "\r"
