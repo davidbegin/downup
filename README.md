@@ -28,7 +28,10 @@ options = [
   "Kangaroo"
 ]
 
-Downup::Base.new(options).prompt
+Downup::Base.new(options: options).prompt
+
+# You can also pass a title when initializing
+Downup::Base.new(options: options, title: "Animals: \n").prompt
 ```
 
 ## Inspired By

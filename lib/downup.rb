@@ -6,12 +6,15 @@ module Downup
   using Colors
 
   class Base
-    def initialize(options)
+    def initialize(options:, title: nil)
       @options = options
+      @title = title
     end
 
     def prompt(position = 0)
       @selected_position = position_selector(position)
+      system("clear")
+      print_title
       print_options
       print "\n> "
       process_input read_char
@@ -19,7 +22,7 @@ module Downup
 
     private
 
-    attr_reader :options, :selected_position
+    attr_reader :options, :title, :selected_position
 
     def process_input(input)
       case input
@@ -43,10 +46,15 @@ module Downup
     end
 
     def print_options
-      system("clear")
       options.each_with_index do |option, index|
         puts index == selected_position ? option.bg_magenta : option
       end
+    end
+
+    def print_title
+      return if title.nil?
+
+      puts "#{title}".red
     end
 
     def read_char
