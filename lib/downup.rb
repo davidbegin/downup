@@ -29,7 +29,7 @@ module Downup
         prompt(selected_position + 1)
       when "\u0003" then exit
       when "\r"
-        puts options[selected_position]
+        options[selected_position]
       else
         prompt(selected_position)
       end
