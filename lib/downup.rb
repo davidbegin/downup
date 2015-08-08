@@ -11,6 +11,8 @@ module Downup
                    default_color: :brown,
                    selected_color: :magenta,
                    selector: "‣",
+                   stdin: STDIN,
+                   stdout: $stdout,
                    header_proc: Proc.new {})
 
       @options        = options
@@ -19,8 +21,8 @@ module Downup
       @selected_color = selected_color
       @selector       = selector
       @header_proc    = header_proc
-      @stdin          = STDIN
-      @stdout         = $stdout
+      @stdin          = stdin
+      @stdout         = stdout
     end
 
     def prompt(position = 0)
