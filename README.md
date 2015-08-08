@@ -87,6 +87,10 @@ options = {
 }
 
 puts Downup::Base.new(options: options).prompt
+
+# You can also pass in the selector you would like
+# if passing in a hash
+puts Downup::Base.new(options: options, selector: "†").prompt
 ```
 
 ## Inspired By

@@ -41,3 +41,5 @@ options = {
 }
 
 puts Downup::Base.new(options: options).prompt
+
+puts Downup::Base.new(options: options, selector: "†").prompt

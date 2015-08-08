@@ -10,12 +10,14 @@ module Downup
                    title: nil,
                    default_color: :brown,
                    selected_color: :magenta,
+                   selector: "‣",
                    header_proc: Proc.new {})
 
       @options        = options
       @title          = title
       @default_color  = default_color
       @selected_color = selected_color
+      @selector       = selector
       @header_proc    = header_proc
       @stdin          = STDIN
       @stdout         = $stdout
@@ -38,6 +40,7 @@ module Downup
                 :selected_position,
                 :header_proc,
                 :selected_color,
+                :selector,
                 :default_color,
                 :stdin,
                 :stdout
@@ -78,19 +81,26 @@ module Downup
 
     def print_options
       case options
-      when Array
-        options.each_with_index do |option, index|
-          stdout.puts colorize_option(option, index)
+      when Array then print_array_options
+      when Hash  then print_hash_options
+      end
+    end
+
+    def print_hash_options
+      options.each_with_index do |option_array, index|
+        if index == selected_position
+          stdout.puts "(#{eval("selector.#{selected_color}")}) " +
+            eval("option_array.last.#{selected_color}")
+        else
+          stdout.print "(#{eval("option_array.first.#{default_color}")}) "
+          stdout.print "#{eval("option_array.last.#{default_color}")}\n"
         end
-      when Hash
-        options.each_with_index do |option_array, index|
-          if index == selected_position
-            stdout.puts "(#{option_array.first}) #{option_array.last}"
-          else
-            stdout.print "(#{eval("option_array.first.#{default_color}")}) "
-            stdout.print "#{eval("option_array.last.#{default_color}")}\n"
-          end
-        end
+      end
+    end
+
+    def print_array_options
+      options.each_with_index do |option, index|
+        stdout.puts colorize_option(option, index)
       end
     end
 
