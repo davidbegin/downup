@@ -43,3 +43,11 @@ options = {
 puts Downup::Base.new(options: options).prompt
 
 puts Downup::Base.new(options: options, selector: "†").prompt
+
+options = {
+  "a" => {"value" => "cat_1", "display" => "Cat"},
+  "b" => {"value" => "kangaroo_1", "display" => "Kangaroo"},
+  "c" => {"value" => "dog_1", "display" => "Dog"}
+}
+
+puts Downup::Base.new(options: options).prompt

@@ -32,7 +32,8 @@ module Downup
       print_title
       print_options
       stdout.print "\n> "
-      process_input read_char
+      input = read_char
+      process_input input
     end
 
     private
@@ -66,8 +67,20 @@ module Downup
       when Array
         options[selected_position]
       when Hash
-        options.fetch(option_keys[selected_position])
+        if options_has_value_and_display?
+          options.fetch(option_keys[selected_position]).fetch("value")
+        else
+          options.fetch(option_keys[selected_position])
+        end
       end
+    end
+
+    def options_has_value_and_display?
+      options.values.all? { |option|
+        option.is_a?(Hash) && option.has_key?("value")
+      } && options.values.all? { |option|
+        option.is_a?(Hash) && option.has_key?("display")
+      }
     end
 
     def option_keys
@@ -84,11 +97,30 @@ module Downup
     def print_options
       case options
       when Array then print_array_options
-      when Hash  then print_hash_options
+      when Hash
+        if options_has_value_and_display?
+          print_complex_hash_options
+        else
+          print_simple_hash_options
+        end
       end
     end
 
-    def print_hash_options
+    def print_complex_hash_options
+      options.each_with_index do |option_array, index|
+        key = option_array.first
+        value_hash = option_array.last
+        if index == selected_position
+          stdout.puts "(#{eval("selector.#{selected_color}")}) " +
+            eval("value_hash.fetch('display').#{selected_color}")
+        else
+          stdout.print "(#{eval("key.#{default_color}")}) "
+          stdout.print "#{eval("value_hash.fetch('display').#{default_color}")}\n"
+        end
+      end
+    end
+
+    def print_simple_hash_options
       options.each_with_index do |option_array, index|
         if index == selected_position
           stdout.puts "(#{eval("selector.#{selected_color}")}) " +

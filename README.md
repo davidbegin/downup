@@ -88,6 +88,15 @@ options = {
 
 puts Downup::Base.new(options: options).prompt
 
+# You can also specifiy a different value from display
+options = {
+  "a" => {"value" => "cat_1", "display" => "Cat"},
+  "b" => {"value" => "kangaroo_1", "display" => "Kangaroo"},
+  "c" => {"value" => "dog_1", "display" => "Dog"}
+}
+
+puts Downup::Base.new(options: options).prompt
+
 # You can also pass in the selector you would like
 # if passing in a hash
 puts Downup::Base.new(options: options, selector: "†").prompt
