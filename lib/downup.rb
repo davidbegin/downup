@@ -1,4 +1,5 @@
 require "downup/version"
+require "downup/options_printer"
 require "downup/colors"
 require "io/console"
 
@@ -23,14 +24,18 @@ module Downup
       @header_proc    = header_proc
       @stdin          = stdin
       @stdout         = stdout
+      @colonel        = Kernel
     end
 
     def prompt(position = 0)
       @selected_position = position_selector(position)
-      system("clear")
+      colonel.system("clear")
       header_proc.call
       print_title
-      print_options
+      Downup::OptionsPrinter.new(
+        options: options,
+        selected_position: @selected_position
+      ).print_options
       stdout.print "\n> "
       input = read_char
       process_input input
@@ -39,14 +44,15 @@ module Downup
     private
 
     attr_reader :options,
-                :title,
-                :selected_position,
-                :header_proc,
-                :selected_color,
-                :selector,
-                :default_color,
-                :stdin,
-                :stdout
+      :title,
+      :selected_position,
+      :header_proc,
+      :selected_color,
+      :selector,
+      :default_color,
+      :stdin,
+      :stdout,
+      :colonel
 
     def process_input(input)
       case input
@@ -92,58 +98,6 @@ module Downup
       when -1 then options.count - 1
       when options.count then 0
       else position; end
-    end
-
-    def print_options
-      case options
-      when Array then print_array_options
-      when Hash
-        if options_has_value_and_display?
-          print_complex_hash_options
-        else
-          print_simple_hash_options
-        end
-      end
-    end
-
-    def print_complex_hash_options
-      options.each_with_index do |option_array, index|
-        key = option_array.first
-        value_hash = option_array.last
-        if index == selected_position
-          stdout.puts "(#{eval("selector.#{selected_color}")}) " +
-            eval("value_hash.fetch('display').#{selected_color}")
-        else
-          stdout.print "(#{eval("key.#{default_color}")}) "
-          stdout.print "#{eval("value_hash.fetch('display').#{default_color}")}\n"
-        end
-      end
-    end
-
-    def print_simple_hash_options
-      options.each_with_index do |option_array, index|
-        if index == selected_position
-          stdout.puts "(#{eval("selector.#{selected_color}")}) " +
-            eval("option_array.last.#{selected_color}")
-        else
-          stdout.print "(#{eval("option_array.first.#{default_color}")}) "
-          stdout.print "#{eval("option_array.last.#{default_color}")}\n"
-        end
-      end
-    end
-
-    def print_array_options
-      options.each_with_index do |option, index|
-        stdout.puts colorize_option(option, index)
-      end
-    end
-
-    def colorize_option(option, index)
-      if index == selected_position
-        eval("option.#{selected_color}")
-      else
-        eval("option.#{default_color}")
-      end
     end
 
     def print_title
