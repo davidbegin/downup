@@ -11,7 +11,7 @@ module Downup
                    default_color: :brown,
                    selected_color: :magenta,
                    selector: "‣",
-                   stdin: STDIN,
+                   stdin: $stdin,
                    stdout: $stdout,
                    header_proc: Proc.new {})
 
