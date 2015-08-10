@@ -1,6 +1,6 @@
-require "downup/version"
-require "downup/options_printer"
-require "downup/colors"
+require_relative "downup/version"
+require_relative "downup/options_printer"
+require_relative "downup/colors"
 require "io/console"
 
 module Downup
