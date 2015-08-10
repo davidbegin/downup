@@ -34,7 +34,10 @@ module Downup
       print_title
       Downup::OptionsPrinter.new(
         options: options,
-        selected_position: @selected_position
+        selected_position: @selected_position,
+        default_color: default_color,
+        selected_color: selected_color,
+        selector: selector
       ).print_options
       stdout.print "\n> "
       input = read_char

@@ -42,7 +42,12 @@ options = {
 
 puts Downup::Base.new(options: options).prompt
 
-puts Downup::Base.new(options: options, selector: "†").prompt
+puts Downup::Base.new(
+  options: options,
+  default_color: :cyan,
+  selected_color: :bg_magenta,
+  selector: "†"
+).prompt
 
 options = {
   "a" => {"value" => "cat_1", "display" => "Cat"},
