@@ -8,7 +8,8 @@ module Downup
 
   class Base
     def initialize(options:,
-                   title: nil,
+                   flash_message: nil,
+                   flash_color: :green,
                    default_color: :brown,
                    selected_color: :magenta,
                    selector: "‣",
@@ -17,7 +18,8 @@ module Downup
                    header_proc: Proc.new {})
 
       @options        = options
-      @title          = title
+      @flash_color    = flash_color
+      @flash_message  = flash_message
       @default_color  = default_color
       @selected_color = selected_color
       @selector       = selector
@@ -31,7 +33,7 @@ module Downup
       @selected_position = position_selector(position)
       colonel.system("clear")
       header_proc.call
-      print_title
+      print_flash
       Downup::OptionsPrinter.new(
         options: options,
         selected_position: @selected_position,
@@ -47,7 +49,8 @@ module Downup
     private
 
     attr_reader :options,
-      :title,
+      :flash_message,
+      :flash_color,
       :selected_position,
       :header_proc,
       :selected_color,
@@ -103,9 +106,10 @@ module Downup
       else position; end
     end
 
-    def print_title
-      return if title.nil?
-      stdout.puts "#{title}".red
+    def print_flash
+      return if flash_message.nil?
+      colored_flash = "\"#{flash_message}\".#{flash_color}"
+      stdout.puts eval(colored_flash)
     end
 
     def read_char

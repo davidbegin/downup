@@ -11,7 +11,7 @@ puts Downup::Base.new(options: options).prompt
 
 puts Downup::Base.new(
   options: options,
-  title: "Choose an Animal: \n"
+  header_proc: -> { "Choose an Animal: \n" }
 ).prompt
 
 def header
@@ -22,7 +22,8 @@ end
 
 puts Downup::Base.new(
   options: options,
-  title: "Choose an Animal: \n",
+  flash_message: "Choose an Animal: \n",
+  flash_color: :red,
   header_proc: method(:header)
 ).prompt
 

@@ -32,8 +32,8 @@ options = [
 
 Downup::Base.new(options: options).prompt
 
-# You can also pass a title when initializing
-Downup::Base.new(options: options, title: "Animals: \n").prompt
+# You can also pass a flash message and color when initializing
+Downup::Base.new(options: options, flash_color: :green, flash_message: "Animals: \n").prompt
 
 # you can pass a callable header
 # to print out before the menu
