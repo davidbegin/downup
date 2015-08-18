@@ -1,17 +1,44 @@
 # require 'minitest_helper'
 require_relative 'minitest_helper'
+require 'minitest/pride'
+require 'minitest/reporters'
+reporter_options = { color: true }
+Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(reporter_options)]
+
+class FakeStdout
+
+  attr_reader :output
+
+  def initialize
+    @output = []
+  end
+
+  def puts(msg)
+    output << msg
+  end
+
+  def print(msg)
+    output << msg
+  end
+end
 
 class TestDownup < Minitest::Test
   def setup
-    @subject = Downup::Base.new(options: ["Dog", "Cat", "Snake"])
+    @stdout = FakeStdout.new
+    @subject = Downup::Base.new(
+      options: ["Cat", "Rat", "Dog"],
+      stdout: @stdout
+    )
   end
+
+  J     = "j"
+  K     = "k"
+  UP    = "\e[A"
+  DOWN  = "\e[B"
+  ENTER = "\r"
 
   def test_that_it_has_a_version_number
     refute_nil ::Downup::VERSION
-  end
-
-  def test_it_does_something_useful
-    assert true
   end
 
   def test_position_selector_wraps_around
@@ -26,7 +53,50 @@ class TestDownup < Minitest::Test
     assert_equal @subject.send(:position_selector, 1), 1
   end
 
-  def test_prompt_can_be_tested
-    Downup::Base.new(options: ["Dog"]).prompt
+  def test_you_can_use_the_arrow_keys_to_make_a_selection1
+    input = [UP, ENTER]
+    define_input_for_subject(input)
+
+    result = @subject.prompt
+
+    assert_equal result, "Dog"
+    assert_equal @subject.selected_position, 2
+  end
+
+  def test_you_can_use_the_arrow_keys_to_make_a_selection2
+    input = [UP, UP, ENTER]
+    define_input_for_subject(input)
+
+    result = @subject.prompt
+    assert_equal result, "Rat"
+    assert_equal @subject.selected_position, 1
+  end
+
+  def test_you_can_use_the_arrow_keys_to_make_a_selection3
+    input = [DOWN, DOWN, ENTER]
+    define_input_for_subject(input)
+
+    result = @subject.prompt
+    assert_equal result, "Dog"
+    assert_equal @subject.selected_position, 2
+  end
+
+  def test_you_can_use_j_and_k
+    input =  [K, J, J, ENTER]
+    define_input_for_subject(input)
+    result = @subject.prompt
+    assert_equal result, "Rat"
+    assert_equal @subject.selected_position, 1
+  end
+
+  private
+
+  def define_input_for_subject(input)
+    @subject.instance_exec(input) do |input|
+      @input = input.reverse
+      def read_char
+        @input.pop
+      end
+    end
   end
 end

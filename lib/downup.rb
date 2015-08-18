@@ -7,6 +7,8 @@ module Downup
   using Colors
 
   class Base
+    attr_reader :selected_position
+
     def initialize(options:,
                    flash_message: nil,
                    flash_color: :green,
@@ -39,7 +41,9 @@ module Downup
         selected_position: @selected_position,
         default_color: default_color,
         selected_color: selected_color,
-        selector: selector
+        selector: selector,
+        stdin: stdin,
+        stdout: stdout,
       ).print_options
       stdout.print "\n> "
       input = read_char
@@ -51,7 +55,6 @@ module Downup
     attr_reader :options,
       :flash_message,
       :flash_color,
-      :selected_position,
       :header_proc,
       :selected_color,
       :selector,
