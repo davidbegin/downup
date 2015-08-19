@@ -4,23 +4,20 @@ module Downup
   class OptionsPrinter
     using Colors
 
+    # should the position be 0 by default?
     def initialize(options:,
                    selected_position:,
-                   title: nil,
                    default_color: :brown,
                    selected_color: :magenta,
                    selector: "‣",
                    stdin: $stdout,
-                   stdout: $stdout,
-                   header_proc: Proc.new {})
+                   stdout: $stdout)
 
       @options           = options
-      @title             = title
       @default_color     = default_color
       @selected_position = selected_position
       @selected_color    = selected_color
       @selector          = selector
-      @header_proc       = header_proc
       @stdin             = stdin
       @stdout            = stdout
       @colonel           = Kernel
@@ -41,9 +38,7 @@ module Downup
     private
 
     attr_reader :options,
-                :title,
                 :selected_position,
-                :header_proc,
                 :selected_color,
                 :selector,
                 :default_color,
@@ -60,7 +55,9 @@ module Downup
             eval("value_hash.fetch('display').#{selected_color}")
         else
           stdout.print "(#{eval("key.#{default_color}")}) "
-          stdout.print "#{eval("value_hash.fetch('display').#{default_color}")}\n"
+          stdout.print(
+            "#{eval("value_hash.fetch('display').#{default_color}")}\n"
+          )
         end
       end
     end

@@ -1,26 +1,5 @@
-# require 'minitest_helper'
 require_relative 'minitest_helper'
-require 'minitest/pride'
-require 'minitest/reporters'
-reporter_options = { color: true }
-Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(reporter_options)]
-
-class FakeStdout
-
-  attr_reader :output
-
-  def initialize
-    @output = []
-  end
-
-  def puts(msg)
-    output << msg
-  end
-
-  def print(msg)
-    output << msg
-  end
-end
+require_relative 'fake_io'
 
 class TestDownup < Minitest::Test
   def setup
