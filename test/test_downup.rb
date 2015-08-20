@@ -16,6 +16,16 @@ class TestDownup < Minitest::Test
   DOWN  = "\e[B"
   ENTER = "\r"
 
+  200000.times do
+    define_method "test_that_it_has_a_version_number_#{Random.rand}" do
+      assert_equal @subject.send(:position_selector, 3), 0
+    end
+  end
+
+  # def test_position_selector_wraps_around_bad
+  #   assert_equal @subject.send(:position_selector, 3), 1
+  # end
+
   def test_that_it_has_a_version_number
     refute_nil ::Downup::VERSION
   end
