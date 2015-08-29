@@ -15,6 +15,7 @@ module Downup
                    default_color: :brown,
                    selected_color: :magenta,
                    selector: "‣",
+                   type: :default,
                    stdin: $stdin,
                    stdout: $stdout,
                    header_proc: Proc.new {})
@@ -25,10 +26,13 @@ module Downup
       @default_color  = default_color
       @selected_color = selected_color
       @selector       = selector
+      @type           = type
       @header_proc    = header_proc
       @stdin          = stdin
       @stdout         = stdout
       @colonel        = Kernel
+
+      @multi_selected_positions = []
     end
 
     def prompt(position = 0)
@@ -39,6 +43,7 @@ module Downup
       Downup::OptionsPrinter.new(
         options: options,
         selected_position: @selected_position,
+        multi_selected_positions: @multi_selected_positions,
         default_color: default_color,
         selected_color: selected_color,
         selector: selector,
@@ -52,16 +57,27 @@ module Downup
 
     private
 
-    attr_reader :options,
-      :flash_message,
-      :flash_color,
-      :header_proc,
-      :selected_color,
-      :selector,
-      :default_color,
-      :stdin,
-      :stdout,
-      :colonel
+    def options
+      @_options ||=
+        begin
+          if multi_select?
+            @options.merge({"z" => "ENTER"})
+          else
+            @options
+          end
+        end
+    end
+
+    attr_reader :flash_message,
+                :flash_color,
+                :header_proc,
+                :selected_color,
+                :selector,
+                :type,
+                :default_color,
+                :stdin,
+                :stdout,
+                :colonel
 
     def process_input(input)
       case input
@@ -72,9 +88,35 @@ module Downup
       when *option_keys
         prompt(option_keys.index(input))
       when "\r"
-        execute_selection(input)
+        if multi_select?
+          manage_multi_select
+          if selected_value == "ENTER"
+            execute_selection(input)
+          else
+            prompt(selected_position)
+          end
+        else
+          execute_selection(input)
+        end
       when "\u0003" then exit
       else prompt(selected_position); end
+    end
+
+    def selected_value
+      options.values[selected_position]
+    end
+
+    def manage_multi_select
+      if @multi_selected_positions.include?(selected_position)
+        @multi_selected_positions.delete(selected_position)
+      else
+        return if selected_position == @options.length
+        @multi_selected_positions << selected_position
+      end
+    end
+
+    def multi_select?
+      type == :multi_select
     end
 
     def execute_selection(input)
@@ -85,7 +127,13 @@ module Downup
         if options_has_value_and_display?
           options.fetch(option_keys[selected_position]).fetch("value")
         else
-          options.fetch(option_keys[selected_position])
+          if multi_select?
+            @multi_selected_positions.map do |p|
+              options.fetch(option_keys[p]) 
+            end
+          else
+            options.fetch(option_keys[selected_position])
+          end
         end
       end
     end

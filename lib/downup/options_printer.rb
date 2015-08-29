@@ -4,23 +4,26 @@ module Downup
   class OptionsPrinter
     using Colors
 
-    # should the position be 0 by default?
     def initialize(options:,
-                   selected_position:,
+                   selected_position: 0,
                    default_color: :brown,
                    selected_color: :magenta,
                    selector: "‣",
+                   multi_selected_positions: [],
+                   type: :default,
                    stdin: $stdout,
                    stdout: $stdout)
 
-      @options           = options
-      @default_color     = default_color
-      @selected_position = selected_position
-      @selected_color    = selected_color
-      @selector          = selector
-      @stdin             = stdin
-      @stdout            = stdout
-      @colonel           = Kernel
+      @options                  = options
+      @default_color            = default_color
+      @selected_position        = selected_position
+      @selected_color           = selected_color
+      @multi_selected_positions = multi_selected_positions
+      @selector                 = selector
+      @type                     = type
+      @stdin                    = stdin
+      @stdout                   = stdout
+      @colonel                  = Kernel
     end
 
     def print_options
@@ -42,6 +45,8 @@ module Downup
                 :selected_color,
                 :selector,
                 :default_color,
+                :multi_selected_positions,
+                :type,
                 :stdin,
                 :stdout,
                 :colonel
@@ -66,6 +71,9 @@ module Downup
       options.each_with_index do |option_array, index|
         if index == selected_position
           stdout.puts "(#{eval("selector.#{selected_color}")}) " +
+            eval("option_array.last.#{selected_color}")
+        elsif multi_selected_positions.include?(index)
+          stdout.puts "(#{eval("multi_selector.#{selected_color}")}) " +
             eval("option_array.last.#{selected_color}")
         else
           stdout.print "(#{eval("option_array.first.#{default_color}")}) "
@@ -95,6 +103,10 @@ module Downup
       } && options.values.all? { |option|
         option.is_a?(Hash) && option.has_key?("display")
       }
+    end
+
+    def multi_selector
+      "•"
     end
   end
 end

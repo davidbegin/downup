@@ -57,3 +57,13 @@ options = {
 }
 
 puts Downup::Base.new(options: options).prompt
+
+options = {
+  "a" => "Cat",
+  "b" => "Dog",
+  "c" => "Kangaroo",
+  "d" => "Snake",
+  "e" => "Eel"
+}
+
+Downup::Base.new(options: options, type: :multi_select).prompt

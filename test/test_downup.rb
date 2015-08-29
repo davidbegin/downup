@@ -68,6 +68,19 @@ class TestDownup < Minitest::Test
     assert_equal @subject.selected_position, 1
   end
 
+  def test_multi_selector
+    @subject = Downup::Base.new(
+      options: {"a" => "Cat", "b" => "Rat", "c" => "Dog"},
+      stdout: @stdout,
+      type: :multi_select
+
+    )
+    input = [ENTER, J, ENTER, J, J, ENTER]
+    define_input_for_subject(input)
+    result = @subject.prompt
+    assert_equal result, ["Cat", "Rat"]
+  end
+
   private
 
   def define_input_for_subject(input)

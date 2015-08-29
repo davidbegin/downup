@@ -100,6 +100,9 @@ puts Downup::Base.new(options: options).prompt
 # You can also pass in the selector you would like
 # if passing in a hash
 puts Downup::Base.new(options: options, selector: "†").prompt
+
+# You can also enable multi_select,
+Downup::Base.new(options: options, type: :multi_select).prompt
 ```
 
 ## Inspired By
