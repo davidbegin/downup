@@ -1,7 +1,11 @@
 # Downup
 
+### \*\*WARNING THIS GEM IS PRE 1.0 AND STILL UNSTABLE\*\*
+
+
 A simple gem for creating command line menus you can use the arrows
 to move through.
+
 
 ## Installation
 
