@@ -103,6 +103,14 @@ puts Downup::Base.new(options: options, selector: "†").prompt
 
 # You can also enable multi_select,
 Downup::Base.new(options: options, type: :multi_select).prompt
+
+# You can customize the Multi Select Selector
+Downup::Base.new(
+  options: options,
+  type: :multi_select,
+  multi_select_selector: "X",
+  selected_color: :red
+).prompt
 ```
 
 ## Inspired By

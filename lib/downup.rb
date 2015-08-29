@@ -14,23 +14,25 @@ module Downup
                    flash_color: :green,
                    default_color: :brown,
                    selected_color: :magenta,
+                   multi_select_selector: "√",
                    selector: "‣",
                    type: :default,
                    stdin: $stdin,
                    stdout: $stdout,
                    header_proc: Proc.new {})
 
-      @options        = options
-      @flash_color    = flash_color
-      @flash_message  = flash_message
-      @default_color  = default_color
-      @selected_color = selected_color
-      @selector       = selector
-      @type           = type
-      @header_proc    = header_proc
-      @stdin          = stdin
-      @stdout         = stdout
-      @colonel        = Kernel
+      @options               = options
+      @flash_color           = flash_color
+      @flash_message         = flash_message
+      @default_color         = default_color
+      @selected_color        = selected_color
+      @selector              = selector
+      @type                  = type
+      @header_proc           = header_proc
+      @stdin                 = stdin
+      @stdout                = stdout
+      @colonel               = Kernel
+      @multi_select_selector = multi_select_selector
 
       @multi_selected_positions = []
     end
@@ -44,6 +46,7 @@ module Downup
         options: options,
         selected_position: @selected_position,
         multi_selected_positions: @multi_selected_positions,
+        multi_select_selector: multi_select_selector,
         default_color: default_color,
         selected_color: selected_color,
         selector: selector,
@@ -77,6 +80,7 @@ module Downup
                 :default_color,
                 :stdin,
                 :stdout,
+                :multi_select_selector,
                 :colonel
 
     def process_input(input)

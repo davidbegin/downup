@@ -66,4 +66,9 @@ options = {
   "e" => "Eel"
 }
 
-Downup::Base.new(options: options, type: :multi_select).prompt
+Downup::Base.new(
+  options: options,
+  type: :multi_select,
+  multi_select_selector: "X",
+  selected_color: :red
+).prompt

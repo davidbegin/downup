@@ -10,6 +10,7 @@ module Downup
                    selected_color: :magenta,
                    selector: "‣",
                    multi_selected_positions: [],
+                   multi_select_selector: "√",
                    type: :default,
                    stdin: $stdout,
                    stdout: $stdout)
@@ -19,6 +20,7 @@ module Downup
       @selected_position        = selected_position
       @selected_color           = selected_color
       @multi_selected_positions = multi_selected_positions
+      @multi_select_selector    = multi_select_selector
       @selector                 = selector
       @type                     = type
       @stdin                    = stdin
@@ -46,6 +48,7 @@ module Downup
                 :selector,
                 :default_color,
                 :multi_selected_positions,
+                :multi_select_selector,
                 :type,
                 :stdin,
                 :stdout,
@@ -73,7 +76,7 @@ module Downup
           stdout.puts "(#{eval("selector.#{selected_color}")}) " +
             eval("option_array.last.#{selected_color}")
         elsif multi_selected_positions.include?(index)
-          stdout.puts "(#{eval("multi_selector.#{selected_color}")}) " +
+          stdout.puts "(#{eval("multi_select_selector.#{selected_color}")}) " +
             eval("option_array.last.#{selected_color}")
         else
           stdout.print "(#{eval("option_array.first.#{default_color}")}) "
@@ -103,10 +106,6 @@ module Downup
       } && options.values.all? { |option|
         option.is_a?(Hash) && option.has_key?("display")
       }
-    end
-
-    def multi_selector
-      "•"
     end
   end
 end
