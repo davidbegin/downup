@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 gemspec
 
 gem "minitest-focus"
+gem "minitest-reporters"
