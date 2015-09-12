@@ -1,5 +1,7 @@
 # Downup
 
+<a href="https://codeclimate.com/github/presidentJFK/downup"><img src="https://codeclimate.com/github/presidentJFK/downup/badges/gpa.svg" /></a>
+
 ### \*\*WARNING THIS GEM IS PRE 1.0 AND STILL UNSTABLE\*\*
 
 
