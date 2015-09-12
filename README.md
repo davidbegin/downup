@@ -1,6 +1,6 @@
 # Downup
 
-<a href="https://codeclimate.com/github/presidentJFK/downup"><img src="https://codeclimate.com/github/presidentJFK/downup/badges/gpa.svg" /></a>
+[![Code Climate](https://codeclimate.com/github/presidentJFK/downup/badges/gpa.svg)](https://codeclimate.com/github/presidentJFK/downup) [![Dependency Status](https://gemnasium.com/presidentJFK/downup.svg)](https://gemnasium.com/presidentJFK/downup)
 
 ### \*\*WARNING THIS GEM IS PRE 1.0 AND STILL UNSTABLE\*\*
 
