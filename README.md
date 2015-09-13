@@ -4,10 +4,8 @@
 
 ### \*\*WARNING THIS GEM IS PRE 1.0 AND STILL UNSTABLE\*\*
 
-
 A simple gem for creating command line menus you can use the arrows
 to move through.
-
 
 ## Installation
 
@@ -121,16 +119,11 @@ Downup::Base.new(
 
 ## Inspired By
 
-This gist
+This Gist
 https://gist.github.com/acook/4190379
 
-and this SO article
+and this Stack Overflow article
 http://stackoverflow.com/questions/1489183/colorized-ruby-output
-
-
-## Development
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 To run specs
 
