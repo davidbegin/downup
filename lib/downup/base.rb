@@ -6,6 +6,23 @@ require "io/console"
 module Downup
   using Colors
 
+  ##
+  # The main interface to use Downup
+  #
+  # initialize a Downup::Base object with all options desired
+  # and call +#prompt+ to retrieve user selection.
+  #
+  # ==== Attributes
+  #
+  # * +options+ - A collection of values to choose from
+  # * +flash_message+ - A message to be displayed above the downup menu
+  # * +flash_color+ - The color of the flash_message
+  # * +default_color+ - The color an unchoosen item
+  # * +selected_color+ - The color a choosen item
+  # * +multi_select_selector+ - The charactor for selected items in multi mode
+  # * +selector+ - The charactor for the moving selector in non-multi mode
+  # * +type+ - single select/default or multi select mode
+  # * +header_proc+ - a Proc that will display a constant string while using Downup
   class Base
     attr_reader :selected_position
 
