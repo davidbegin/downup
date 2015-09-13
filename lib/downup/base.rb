@@ -9,51 +9,63 @@ module Downup
   ##
   # The main interface to use Downup
   #
-  # initialize a Downup::Base object with all options desired
-  # and call +#prompt+ to retrieve user selection.
-  #
-  # ==== Attributes
-  #
-  # * +options+ - A collection of values to choose from
-  # * +flash_message+ - A message to be displayed above the downup menu
-  # * +flash_color+ - The color of the flash_message
-  # * +default_color+ - The color an unchoosen item
-  # * +selected_color+ - The color a choosen item
-  # * +multi_select_selector+ - The charactor for selected items in multi mode
-  # * +selector+ - The charactor for the moving selector in non-multi mode
-  # * +type+ - single select/default or multi select mode
-  # * +header_proc+ - a Proc that will display a constant string while using Downup
+  # initialize a Downup::Base object with all your desired options
+  # and call +#prompt+ to retrieve the user selection.
   class Base
     attr_reader :selected_position
 
+    # @param options [Hash|Array] collection of options to choose from
+    # @param flash_message [String] A message to be displayed above the downup menu
+    # @param flash_color [Symbol] color of flash message
+    # @param default_color [Symbol] The color an unchoosen item
+    # @param selected_color [Symbol] The color a choosen item
+    # @param multi_select_selector [String] The charactor for selected items in multi mode
+    # @param selector [String] The charactor for the moving selector in non-multi mode
+    # @param type [Symbol] single select/default or multi select mode, `:default` or `:multi_select`
+    # @param header_proc [Proc] a proc that will called before each render of option selection
+    #
+    # @example array of options
+    #   Downup::Base.new(options: ["option 1", "option 2"])
+    #
+    # @example hash of options
+    #   Downup::Base.new(options: {"a" => "option 1", "b" => "option 2"})
+    #
+    # @example hash with "value" and "display" keys
+    #   Downup::Base.new(options: {"a" => {"value" => "option 1", "display" => "Option 1"}})
+    #
+    # @example header_proc example
+    #   Downup::Base.new(options: [], header_proc: Proc.new {puts "Hello"})
     def initialize(options:,
-                   flash_message: nil,
-                   flash_color: :green,
-                   default_color: :brown,
-                   selected_color: :magenta,
+                   flash_message:         nil,
+                   flash_color:           :green,
+                   default_color:         :brown,
+                   selected_color:        :magenta,
                    multi_select_selector: "√",
-                   selector: "‣",
-                   type: :default,
-                   stdin: $stdin,
-                   stdout: $stdout,
-                   header_proc: Proc.new {})
+                   selector:              "‣",
+                   type:                  :default,
+                   stdin:                 $stdin,
+                   stdout:                $stdout,
+                   header_proc:           Proc.new{})
 
-      @options               = options
-      @flash_color           = flash_color
-      @flash_message         = flash_message
-      @default_color         = default_color
-      @selected_color        = selected_color
-      @selector              = selector
-      @type                  = type
-      @header_proc           = header_proc
-      @stdin                 = stdin
-      @stdout                = stdout
-      @colonel               = Kernel
-      @multi_select_selector = multi_select_selector
-
+      @options                  = options
+      @flash_color              = flash_color
+      @flash_message            = flash_message
+      @default_color            = default_color
+      @selected_color           = selected_color
+      @selector                 = selector
+      @type                     = type
+      @header_proc              = header_proc
+      @stdin                    = stdin
+      @stdout                   = stdout
+      @colonel                  = Kernel
+      @multi_select_selector    = multi_select_selector
       @multi_selected_positions = []
     end
 
+    # Prompts the user to make selection from the options
+    # the object with initialized with.
+    # @param position [Integer] where the selector will start at
+    # @return [String] a string of the user's selection
     def prompt(position = 0)
       @selected_position = position_selector(position)
       colonel.system("clear")
