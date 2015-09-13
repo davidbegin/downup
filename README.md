@@ -1,6 +1,6 @@
 # Downup
 
-[![Code Climate](https://codeclimate.com/github/presidentJFK/downup/badges/gpa.svg)](https://codeclimate.com/github/presidentJFK/downup) [![Dependency Status](https://gemnasium.com/presidentJFK/downup.svg)](https://gemnasium.com/presidentJFK/downup)
+[![Build Status](https://travis-ci.org/presidentJFK/downup.svg?branch=master)](https://travis-ci.org/presidentJFK/downup) [![Test Coverage](https://codeclimate.com/github/presidentJFK/downup/badges/coverage.svg)](https://codeclimate.com/github/presidentJFK/downup/coverage) [![Code Climate](https://codeclimate.com/github/presidentJFK/downup/badges/gpa.svg)](https://codeclimate.com/github/presidentJFK/downup) [![Dependency Status](https://gemnasium.com/presidentJFK/downup.svg)](https://gemnasium.com/presidentJFK/downup)
 
 ### \*\*WARNING THIS GEM IS PRE 1.0 AND STILL UNSTABLE\*\*
 
