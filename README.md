@@ -1,6 +1,6 @@
 # Downup
 
-[![Gem Version](https://badge.fury.io/rb/downup.svg)](http://badge.fury.io/rb/downup) [![Build Status](https://travis-ci.org/presidentJFK/downup.svg?branch=master)](https://travis-ci.org/presidentJFK/downup) [![Test Coverage](https://codeclimate.com/github/presidentJFK/downup/badges/coverage.svg)](https://codeclimate.com/github/presidentJFK/downup/coverage) [![Code Climate](https://codeclimate.com/github/presidentJFK/downup/badges/gpa.svg)](https://codeclimate.com/github/presidentJFK/downup) [![Dependency Status](https://gemnasium.com/presidentJFK/downup.svg)](https://gemnasium.com/presidentJFK/downup) [![Inline docs](http://inch-ci.org/github/presidentJFK/downup.svg?branch=master)](http://inch-ci.org/github/presidentJFK/downup)
+[![Gem Version](https://badge.fury.io/rb/downup.svg)](http://badge.fury.io/rb/downup) [![Build Status](https://travis-ci.org/davidbegin/downup.svg?branch=master)](https://travis-ci.org/davidbegin/downup) [![Test Coverage](https://codeclimate.com/github/davidbegin/downup/badges/coverage.svg)](https://codeclimate.com/github/davidbegin/downup/coverage) [![Code Climate](https://codeclimate.com/github/davidbegin/downup/badges/gpa.svg)](https://codeclimate.com/github/davidbegin/downup) [![Dependency Status](https://gemnasium.com/presidentJFK/downup.svg)](https://gemnasium.com/presidentJFK/downup) [![Inline docs](http://inch-ci.org/github/presidentJFK/downup.svg?branch=master)](http://inch-ci.org/github/presidentJFK/downup)
 
 ### \*\*WARNING THIS GEM IS PRE 1.0 AND STILL UNSTABLE\*\*
 
