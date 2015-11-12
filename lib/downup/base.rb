@@ -121,31 +121,26 @@ module Downup
       when *option_keys
         prompt(option_keys.index(input))
       when "\r"
-        if multi_select?
-          manage_multi_select
-          if selected_value == "ENTER"
-            execute_selection(input)
-          else
-            prompt(selected_position)
-          end
-        else
-          execute_selection(input)
-        end
+        multi_select? ? manage_multi_select(input) : execute_selection(input)
       when "\u0003" then exit
-      else prompt(selected_position); end
+      else prompt(selected_position)
+      end
     end
 
     def selected_value
       options.values[selected_position]
     end
 
-    def manage_multi_select
+    def manage_multi_select(input)
+      return execute_selection(input) if selected_value == "ENTER"
+
       if @multi_selected_positions.include?(selected_position)
         @multi_selected_positions.delete(selected_position)
       else
-        return if selected_position == @options.length
         @multi_selected_positions << selected_position
       end
+
+      prompt(selected_position)
     end
 
     def multi_select?
@@ -162,7 +157,7 @@ module Downup
         else
           if multi_select?
             @multi_selected_positions.map do |p|
-              options.fetch(option_keys[p]) 
+              options.fetch(option_keys[p])
             end
           else
             options.fetch(option_keys[selected_position])
